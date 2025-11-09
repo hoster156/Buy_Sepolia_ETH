@@ -18,8 +18,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 10px;
-            padding-bottom: 10px;
+            padding: 15px;
             position: relative;
             overflow-x: hidden;
             overflow-y: auto;
@@ -33,6 +32,7 @@
             background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
             background-size: 50px 50px;
             animation: moveBackground 20s linear infinite;
+            z-index: 0;
         }
 
         @keyframes moveBackground {
@@ -43,25 +43,25 @@
         .container {
             background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border-radius: 30px;
-            padding: 40px;
+            border-radius: 20px;
+            padding: 25px;
             max-width: 500px;
             width: 100%;
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
             z-index: 1;
-            margin-bottom: 0;
+            margin: 10px auto;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .logo {
-            font-size: 48px;
-            margin-bottom: 10px;
+            font-size: 40px;
+            margin-bottom: 8px;
             animation: float 3s ease-in-out infinite;
         }
 
@@ -72,18 +72,18 @@
 
         h1 {
             color: white;
-            font-size: 28px;
-            margin-bottom: 10px;
+            font-size: 22px;
+            margin-bottom: 8px;
         }
 
         .price-tag {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             color: white;
-            padding: 10px 20px;
+            padding: 8px 16px;
             border-radius: 20px;
             display: inline-block;
             font-weight: bold;
-            font-size: 18px;
+            font-size: 16px;
             animation: pulse 2s ease-in-out infinite;
         }
 
@@ -94,13 +94,13 @@
 
         .exchange-section {
             background: rgba(255, 255, 255, 0.15);
-            border-radius: 20px;
-            padding: 25px;
-            margin-bottom: 25px;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
         }
 
         .input-group {
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
         label {
@@ -108,16 +108,17 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
+            font-size: 14px;
         }
 
         input[type="number"] {
             width: 100%;
-            padding: 15px;
+            padding: 12px;
             border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
+            border-radius: 12px;
             background: rgba(255, 255, 255, 0.1);
             color: white;
-            font-size: 18px;
+            font-size: 16px;
             transition: all 0.3s;
         }
 
@@ -132,21 +133,21 @@
         }
 
         .payment-methods {
-            margin-bottom: 25px;
+            margin-bottom: 0;
         }
 
         .payment-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 15px;
-            margin-top: 15px;
+            gap: 12px;
+            margin-top: 10px;
         }
 
         .payment-option {
             background: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 15px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 15px;
             cursor: pointer;
             transition: all 0.3s;
             text-align: center;
@@ -154,18 +155,18 @@
 
         .payment-option:hover {
             background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-5px);
+            transform: translateY(-3px);
         }
 
         .payment-option.active {
             border-color: #f5576c;
             background: rgba(245, 87, 108, 0.2);
-            box-shadow: 0 0 20px rgba(245, 87, 108, 0.4);
+            box-shadow: 0 0 15px rgba(245, 87, 108, 0.4);
         }
 
         .payment-icon {
-            font-size: 36px;
-            margin-bottom: 8px;
+            font-size: 32px;
+            margin-bottom: 6px;
         }
 
         .payment-name {
@@ -182,55 +183,83 @@
 
         .summary {
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 15px;
-            padding: 20px;
-            margin-bottom: 20px;
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
             color: white;
         }
 
         .summary-row {
             display: flex;
             justify-content: space-between;
-            margin-bottom: 10px;
-            font-size: 16px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            gap: 10px;
+        }
+
+        .summary-row span:first-child {
+            flex-shrink: 0;
+        }
+
+        .summary-row span:last-child {
+            text-align: right;
+            word-break: break-word;
         }
 
         .summary-row.total {
             font-weight: bold;
-            font-size: 20px;
-            padding-top: 10px;
+            font-size: 18px;
+            padding-top: 8px;
             border-top: 1px solid rgba(255, 255, 255, 0.3);
-            margin-top: 10px;
+            margin-top: 8px;
         }
 
         .buy-button {
             width: 100%;
-            padding: 18px;
+            padding: 15px;
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             border: none;
-            border-radius: 15px;
+            border-radius: 12px;
             color: white;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s;
-            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
-            margin-bottom: 5px;
+            box-shadow: 0 4px 12px rgba(245, 87, 108, 0.4);
+            margin-bottom: 10px;
         }
 
         .buy-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(245, 87, 108, 0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(245, 87, 108, 0.6);
         }
 
         .buy-button:active {
-            transform: translateY(-1px);
+            transform: translateY(0);
         }
 
         .buy-button:disabled {
             opacity: 0.5;
             cursor: not-allowed;
             transform: none;
+        }
+
+        .sender-address {
+            text-align: center;
+            color: white;
+            font-size: 12px;
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            word-break: break-all;
+        }
+
+        .sender-address span {
+            font-family: monospace;
+            font-size: 11px;
+            display: block;
+            margin-top: 5px;
         }
 
         .modal {
@@ -245,6 +274,7 @@
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
 
         .modal.active {
@@ -253,11 +283,14 @@
 
         .modal-content {
             background: rgba(255, 255, 255, 0.95);
-            padding: 40px;
-            border-radius: 20px;
+            padding: 30px 20px;
+            border-radius: 15px;
             max-width: 400px;
+            width: 100%;
             text-align: center;
             animation: modalSlideIn 0.3s ease-out;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         @keyframes modalSlideIn {
@@ -272,28 +305,30 @@
         }
 
         .modal-icon {
-            font-size: 60px;
-            margin-bottom: 20px;
+            font-size: 50px;
+            margin-bottom: 15px;
         }
 
         .modal-content h2 {
             color: #333;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            font-size: 20px;
         }
 
         .modal-content p {
             color: #666;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
+            font-size: 14px;
         }
 
         .close-button {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 12px 30px;
-            border-radius: 10px;
+            padding: 10px 25px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 600;
         }
 
@@ -302,16 +337,109 @@
             padding: 10px;
             border-radius: 8px;
             word-break: break-all;
-            margin: 15px 0;
+            margin: 12px 0;
             font-family: monospace;
             color: #333;
+            font-size: 14px;
         }
 
         .btc-price-indicator {
             color: rgba(255, 255, 255, 0.8);
-            font-size: 12px;
+            font-size: 11px;
             text-align: center;
-            margin-top: 10px;
+            margin-top: 8px;
+        }
+
+        /* Mobile specific adjustments */
+        @media (max-width: 480px) {
+            body {
+                padding: 10px;
+            }
+
+            .container {
+                padding: 20px;
+                border-radius: 15px;
+            }
+
+            h1 {
+                font-size: 20px;
+            }
+
+            .logo {
+                font-size: 36px;
+            }
+
+            .price-tag {
+                font-size: 14px;
+                padding: 6px 14px;
+            }
+
+            .exchange-section {
+                padding: 15px;
+            }
+
+            input[type="number"] {
+                font-size: 15px;
+                padding: 10px;
+            }
+
+            .summary-row {
+                font-size: 13px;
+            }
+
+            .summary-row.total {
+                font-size: 16px;
+            }
+
+            .buy-button {
+                font-size: 16px;
+                padding: 12px;
+            }
+
+            .sender-address {
+                font-size: 11px;
+                padding: 8px;
+            }
+
+            .sender-address span {
+                font-size: 10px;
+            }
+
+            .modal-content {
+                padding: 25px 15px;
+            }
+
+            .modal-icon {
+                font-size: 40px;
+            }
+
+            .modal-content h2 {
+                font-size: 18px;
+            }
+
+            .wallet-address {
+                font-size: 12px;
+                padding: 8px;
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 360px) {
+            .container {
+                padding: 15px;
+            }
+
+            h1 {
+                font-size: 18px;
+            }
+
+            .summary-row {
+                font-size: 12px;
+            }
+
+            .summary-row.total {
+                font-size: 15px;
+            }
         }
     </style>
 </head>
@@ -334,7 +462,7 @@
                 <div class="payment-grid">
                     <div class="payment-option active" data-payment="btc">
                         <div class="payment-icon">
-                            <svg width="36" height="36" viewBox="0 0 32 32" fill="white">
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="white">
                                 <path d="M16 32C7.163 32 0 24.837 0 16S7.163 0 16 0s16 7.163 16 16-7.163 16-16 16zm7.189-17.98c.314-2.096-1.283-3.223-3.465-3.975l.708-2.84-1.728-.43-.69 2.765c-.454-.114-.92-.22-1.385-.326l.695-2.783L15.596 6l-.708 2.839c-.376-.086-.746-.17-1.104-.26l.002-.009-2.384-.595-.46 1.846s1.283.294 1.256.312c.7.175.826.638.805 1.006l-.806 3.235c.048.012.11.03.18.057l-.183-.045-1.13 4.532c-.086.212-.303.531-.793.41.018.025-1.256-.313-1.256-.313l-.858 1.978 2.25.561c.418.105.828.215 1.231.318l-.715 2.872 1.727.43.708-2.84c.472.127.93.245 1.378.357l-.706 2.828 1.728.43.715-2.866c2.948.558 5.164.333 6.097-2.333.752-2.146-.037-3.385-1.588-4.192 1.13-.26 1.98-1.003 2.207-2.538zm-3.95 5.538c-.533 2.147-4.148.986-5.32.695l.95-3.805c1.172.293 4.929.872 4.37 3.11zm.535-5.569c-.487 1.953-3.495.96-4.47.717l.86-3.45c.975.243 4.118.696 3.61 2.733z"/>
                             </svg>
                         </div>
@@ -367,20 +495,19 @@
 
         <button class="buy-button" id="buyButton">Buy Sepolia ETH</button>
 
-        <!-- Sender address proof section -->
-        <p id="senderAddress" style="text-align:center; color:white; font-size:14px; margin-top:8px;">
-        Sepolia ETH Sender Address For Proof: <span style="font-family:monospace;">0x85090A672afe0d4197631Ab1ad8622b6Ce5F6dc3</span>
-        </p>
+        <div class="sender-address">
+            Sepolia ETH Sender Address For Proof:
+            <span>0x85090A672afe0d4197631Ab1ad8622b6Ce5F6dc3</span>
+        </div>
     </div>
 
-    <!-- Modal -->
     <div class="modal" id="paymentModal">
         <div class="modal-content">
             <div class="modal-icon">⚡</div>
             <h2>Payment Instructions</h2>
             <p>Send <strong id="modalAmount"></strong> to:</p>
             <div class="wallet-address" id="modalAddress"></div>
-            <p style="font-size: 12px; color: #999;">After payment, your Sepolia ETH will be sent to your wallet within 1 minutes.</p>
+            <p style="font-size: 12px; color: #999;">After payment, your Sepolia ETH will be sent to your wallet within 1 minute.</p>
             <button class="close-button" id="closeModal">Got it!</button>
         </div>
     </div>
@@ -455,17 +582,17 @@
             const totalSats = calculateSats(totalUSD);
             
             modalAmount.innerHTML = `
-                <strong style="font-size: 24px; color: #f5576c;">${totalSats.toLocaleString()} sats</strong>
-                <br><span style="font-size: 14px; color: #666;">($${totalUSD} USD)</span>
-                <br><span style="font-size: 12px; color: #999;">BTC Price: $${btcPrice.toLocaleString()}</span>
+                <strong style="font-size: 20px; color: #f5576c;">${totalSats.toLocaleString()} sats</strong>
+                <br><span style="font-size: 13px; color: #666;">($${totalUSD} USD)</span>
+                <br><span style="font-size: 11px; color: #999;">BTC Price: $${btcPrice.toLocaleString()}</span>
             `;
             
             modalAddress.innerHTML = `
-                <div style="font-weight: bold; margin-bottom: 10px; color: #333;">Lightning Address:</div>
-                <div style="background: #f0f0f0; padding: 15px; border-radius: 8px; word-break: break-all; font-family: monospace; color: #333; font-size: 16px; font-weight: bold;">
+                <div style="font-weight: bold; margin-bottom: 8px; color: #333; font-size: 13px;">Lightning Address:</div>
+                <div style="background: #f0f0f0; padding: 12px; border-radius: 8px; word-break: break-all; font-family: monospace; color: #333; font-size: 13px; font-weight: bold;">
                     ${LIGHTNING_ADDRESS}
                 </div>
-                <div style="margin-top: 15px; font-size: 13px; color: #666; line-height: 1.6;">
+                <div style="margin-top: 12px; font-size: 12px; color: #666; line-height: 1.5;">
                     Send exactly <strong style="color: #f5576c;">${totalSats.toLocaleString()} sats</strong> to complete your purchase of <strong>${amount} Sepolia ETH</strong>
                 </div>
             `;
@@ -488,13 +615,3 @@
     </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
