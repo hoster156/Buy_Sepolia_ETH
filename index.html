@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sepolia ETH Exchange - $0.50 per ETH</title>
+    <title>Sepolia ETH Exchange - $0.10 per ETH</title>
     <style>
         * {
             margin: 0;
@@ -317,7 +317,7 @@
         <div class="header">
             <div class="logo">⚡</div>
             <h1>Sepolia ETH Exchange</h1>
-            <div class="price-tag">$0.50 per ETH</div>
+            <div class="price-tag">$0.10 per ETH</div>
         </div>
 
         <div class="exchange-section">
@@ -349,7 +349,7 @@
             </div>
             <div class="summary-row">
                 <span>Price per ETH:</span>
-                <span>$0.50</span>
+                <span>$0.10</span>
             </div>
             <div class="summary-row">
                 <span>Payment Method:</span>
@@ -357,7 +357,7 @@
             </div>
             <div class="summary-row total">
                 <span>Total:</span>
-                <span id="summaryTotal">$0.50 (500 sats)</span>
+                <span id="summaryTotal">$0.10 (500 sats)</span>
             </div>
             <div class="btc-price-indicator" id="btcPriceIndicator">Loading BTC price...</div>
         </div>
@@ -389,7 +389,7 @@
         const modalAmount = document.getElementById('modalAmount');
         const modalAddress = document.getElementById('modalAddress');
 
-        const PRICE_PER_ETH = 0.50;
+        const PRICE_PER_ETH = 0.10;
         const LIGHTNING_ADDRESS = 'payment12@speed.app';
         let selectedPayment = 'btc';
         let btcPrice = 0;
@@ -491,5 +491,6 @@
     </script>
 </body>
 </html>
+
 
 
