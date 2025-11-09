@@ -17,23 +17,17 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             padding: 15px;
             position: relative;
             overflow-x: hidden;
             overflow-y: auto;
         }
-        
-        @media (min-height: 700px) {
-            body {
-                align-items: center;
-            }
-        }
 
         body::before {
             content: '';
             position: absolute;
-            width: 200%;
+            width: 100%;
             height: 90%;
             background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
             background-size: 50px 50px;
@@ -57,7 +51,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
             z-index: 1;
-            margin: auto;
+            margin: 10px auto;
         }
 
         .header {
