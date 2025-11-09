@@ -3,383 +3,491 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sepolia Faucet</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/ethers@5.7.2/dist/ethers.umd.min.js"></script>
+    <title>Sepolia ETH Exchange - $0.50 per ETH</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap');
-        
-        html, body {
-            font-family: 'Space Grotesk', sans-serif;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
             overflow-x: hidden;
             overflow-y: auto;
-            height: auto;
-            min-height: 100vh;
         }
-        
-        .gradient-bg {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+        body::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: moveBackground 20s linear infinite;
         }
-        
-        .glass-effect {
-            background: rgba(255, 255, 255, 0.05);
+
+        @keyframes moveBackground {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 500px;
+            width: 100%;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            z-index: 1;
         }
-        
-        .glow {
-            box-shadow: 0 0 20px rgba(102, 126, 234, 0.5);
+
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
         }
-        
+
+        .logo {
+            font-size: 48px;
+            margin-bottom: 10px;
+            animation: float 3s ease-in-out infinite;
+        }
+
         @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-20px); }
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
         }
-        
-        .float-animation {
-            animation: float 6s ease-in-out infinite;
+
+        h1 {
+            color: white;
+            font-size: 28px;
+            margin-bottom: 10px;
         }
-        
-        .gradient-text {
+
+        .price-tag {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 20px;
+            display: inline-block;
+            font-weight: bold;
+            font-size: 18px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .exchange-section {
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            color: white;
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            font-size: 18px;
+            transition: all 0.3s;
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #f5576c;
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        input[type="number"]::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .payment-methods {
+            margin-bottom: 25px;
+        }
+
+        .payment-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .payment-option {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .payment-option:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-5px);
+        }
+
+        .payment-option.active {
+            border-color: #f5576c;
+            background: rgba(245, 87, 108, 0.2);
+            box-shadow: 0 0 20px rgba(245, 87, 108, 0.4);
+        }
+
+        .payment-icon {
+            font-size: 36px;
+            margin-bottom: 8px;
+        }
+
+        .payment-name {
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .payment-network {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        .summary {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .summary-row.total {
+            font-weight: bold;
+            font-size: 20px;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            margin-top: 10px;
+        }
+
+        .buy-button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border: none;
+            border-radius: 15px;
+            color: white;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        .buy-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(245, 87, 108, 0.6);
+        }
+
+        .buy-button:active {
+            transform: translateY(-1px);
+        }
+
+        .buy-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            max-width: 400px;
+            text-align: center;
+            animation: modalSlideIn 0.3s ease-out;
+        }
+
+        @keyframes modalSlideIn {
+            from {
+                transform: translateY(-50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .modal-icon {
+            font-size: 60px;
+            margin-bottom: 20px;
+        }
+
+        .modal-content h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .close-button {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        .wallet-address {
+            background: #f0f0f0;
+            padding: 10px;
+            border-radius: 8px;
+            word-break: break-all;
+            margin: 15px 0;
+            font-family: monospace;
+            color: #333;
+        }
+
+        .btc-price-indicator {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 12px;
+            text-align: center;
+            margin-top: 10px;
         }
     </style>
 </head>
-<body class="gradient-bg p-4 md:p-8 py-12 relative" style="min-height: 100vh; height: auto;">
-    
-    <!-- Animated Background Elements -->
-    <div class="fixed inset-0 overflow-hidden pointer-events-none">
-        <div class="absolute top-20 left-20 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 float-animation"></div>
-        <div class="absolute bottom-20 right-20 w-72 h-72 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 float-animation" style="animation-delay: 2s;"></div>
-        <div class="absolute top-40 right-40 w-72 h-72 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 float-animation" style="animation-delay: 4s;"></div>
-    </div>
-
-    <div class="w-full max-w-2xl relative z-10 mx-auto">
-        <!-- Header Card -->
-        <div class="glass-effect rounded-3xl p-8 mb-6 text-center">
-            <div class="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-gradient-to-br from-purple-500 to-blue-500 mb-4 glow">
-                <svg width="40" height="40" stroke-width="2.5" viewBox="0 0 24 24" fill="none" stroke="white">
-                    <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" />
-                </svg>
-            </div>
-            <h1 class="text-5xl font-bold text-white mb-3">Sepolia Faucet</h1>
-            <p class="text-xl text-purple-200 font-medium">Get free testnet ETH instantly</p>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">⚡</div>
+            <h1>Sepolia ETH Exchange</h1>
+            <div class="price-tag">$0.50 per ETH</div>
         </div>
 
-        <!-- Main Card -->
-        <div class="glass-effect rounded-3xl p-8 space-y-6">
+        <div class="exchange-section">
+            <div class="input-group">
+                <label>Amount of Sepolia ETH</label>
+                <input type="number" id="ethAmount" placeholder="Enter amount" min="0" step="0.01" value="1">
+            </div>
+
+            <div class="payment-methods">
+                <label>Payment Method</label>
+                <div class="payment-grid">
+                    <div class="payment-option active" data-payment="btc">
+                        <div class="payment-icon">
+                            <svg width="36" height="36" viewBox="0 0 32 32" fill="white">
+                                <path d="M16 32C7.163 32 0 24.837 0 16S7.163 0 16 0s16 7.163 16 16-7.163 16-16 16zm7.189-17.98c.314-2.096-1.283-3.223-3.465-3.975l.708-2.84-1.728-.43-.69 2.765c-.454-.114-.92-.22-1.385-.326l.695-2.783L15.596 6l-.708 2.839c-.376-.086-.746-.17-1.104-.26l.002-.009-2.384-.595-.46 1.846s1.283.294 1.256.312c.7.175.826.638.805 1.006l-.806 3.235c.048.012.11.03.18.057l-.183-.045-1.13 4.532c-.086.212-.303.531-.793.41.018.025-1.256-.313-1.256-.313l-.858 1.978 2.25.561c.418.105.828.215 1.231.318l-.715 2.872 1.727.43.708-2.84c.472.127.93.245 1.378.357l-.706 2.828 1.728.43.715-2.866c2.948.558 5.164.333 6.097-2.333.752-2.146-.037-3.385-1.588-4.192 1.13-.26 1.98-1.003 2.207-2.538zm-3.95 5.538c-.533 2.147-4.148.986-5.32.695l.95-3.805c1.172.293 4.929.872 4.37 3.11zm.535-5.569c-.487 1.953-3.495.96-4.47.717l.86-3.45c.975.243 4.118.696 3.61 2.733z"/>
+                            </svg>
+                        </div>
+                        <div class="payment-name">Bitcoin</div>
+                        <div class="payment-network">Lightning Network</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary">
+            <div class="summary-row">
+                <span>Sepolia ETH:</span>
+                <span id="summaryEth">1.00</span>
+            </div>
+            <div class="summary-row">
+                <span>Price per ETH:</span>
+                <span>$0.50</span>
+            </div>
+            <div class="summary-row">
+                <span>Payment Method:</span>
+                <span id="summaryMethod">BTC Lightning</span>
+            </div>
+            <div class="summary-row total">
+                <span>Total:</span>
+                <span id="summaryTotal">$0.50 (500 sats)</span>
+            </div>
+            <div class="btc-price-indicator" id="btcPriceIndicator">Loading BTC price...</div>
+        </div>
+
+        <button class="buy-button" id="buyButton">Buy Sepolia ETH</button>
+    </div>
+
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <div class="modal-icon">⚡</div>
+            <h2>Payment Instructions</h2>
+            <p>Send <strong id="modalAmount"></strong> to:</p>
+            <div class="wallet-address" id="modalAddress"></div>
+            <p style="font-size: 12px; color: #999;">After payment, your Sepolia ETH will be sent to your wallet within 10 minutes.</p>
+            <button class="close-button" id="closeModal">Got it!</button>
+        </div>
+    </div>
+
+    <script>
+        const ethInput = document.getElementById('ethAmount');
+        const summaryEth = document.getElementById('summaryEth');
+        const summaryMethod = document.getElementById('summaryMethod');
+        const summaryTotal = document.getElementById('summaryTotal');
+        const btcPriceIndicator = document.getElementById('btcPriceIndicator');
+        const buyButton = document.getElementById('buyButton');
+        const paymentOptions = document.querySelectorAll('.payment-option');
+        const modal = document.getElementById('paymentModal');
+        const closeModal = document.getElementById('closeModal');
+        const modalAmount = document.getElementById('modalAmount');
+        const modalAddress = document.getElementById('modalAddress');
+
+        const PRICE_PER_ETH = 0.50;
+        const LIGHTNING_ADDRESS = 'payment@speed.app';
+        let selectedPayment = 'btc';
+        let btcPrice = 0;
+
+        // Fetch current BTC price in USD from CoinGecko API
+        async function fetchBTCPrice() {
+            try {
+                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
+                const data = await response.json();
+                btcPrice = data.bitcoin.usd;
+                btcPriceIndicator.textContent = `BTC Price: $${btcPrice.toLocaleString()}`;
+                updateSummary();
+            } catch (error) {
+                console.error('Error fetching BTC price:', error);
+                btcPrice = 100000; // Fallback price
+                btcPriceIndicator.textContent = `BTC Price: $${btcPrice.toLocaleString()} (estimated)`;
+                updateSummary();
+            }
+        }
+
+        // Calculate SATS from USD amount
+        function calculateSats(usdAmount) {
+            if (btcPrice === 0) return 0;
+            const btcAmount = usdAmount / btcPrice;
+            const sats = Math.round(btcAmount * 100000000); // 1 BTC = 100,000,000 sats
+            return sats;
+        }
+
+        // Update summary when amount changes
+        ethInput.addEventListener('input', updateSummary);
+
+        function updateSummary() {
+            const amount = parseFloat(ethInput.value) || 0;
+            const totalUSD = (amount * PRICE_PER_ETH).toFixed(2);
+            const totalSats = calculateSats(totalUSD);
             
-            <!-- Requirements Info -->
-            <div class="bg-gradient-to-r from-purple-500/20 to-blue-500/20 rounded-2xl p-6 border border-purple-400/30">
-                <h3 class="text-white font-semibold text-lg mb-3 flex items-center">
-                    <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <circle cx="12" cy="12" r="10"></circle>
-                        <path d="M12 16v-4M12 8h.01"></path>
-                    </svg>
-                    Requirements
-                </h3>
-                <div class="space-y-2 text-purple-100">
-                    <p class="flex items-center">
-                        <span class="w-2 h-2 bg-purple-400 rounded-full mr-3"></span>
-                        Minimum 0.01 ETH on Ethereum mainnet
-                    </p>
-                    <p class="flex items-center">
-                        <span class="w-2 h-2 bg-purple-400 rounded-full mr-3"></span>
-                        Receive 0.1 Sepolia ETH per request
-                    </p>
-                    <p class="flex items-center">
-                        <span class="w-2 h-2 bg-purple-400 rounded-full mr-3"></span>
-                        24-hour cooldown between requests
-                    </p>
-                </div>
-            </div>
-
-            <!-- Wallet Connection -->
-            <div class="glass-effect rounded-2xl p-6">
-                <div class="flex items-center justify-between flex-wrap gap-4">
-                    <div class="flex items-center space-x-3">
-                        <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl flex items-center justify-center">
-                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h12a2 2 0 0 1 0 4H5a2 2 0 0 1 0 4h12a2 2 0 0 0 2-2v-4a1 1 0 0 0-1-1H9a1 1 0 0 0 0 2h7" />
-                            </svg>
-                        </div>
-                        <div>
-                            <p class="text-purple-200 text-sm">Wallet Address</p>
-                            <p id="user-address" class="text-white font-mono font-semibold text-sm md:text-base truncate max-w-[200px] md:max-w-none">
-                                Not Connected
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Balance Info Grid -->
-            <div id="info-section" class="hidden grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div class="glass-effect rounded-2xl p-6 border border-purple-400/30">
-                    <div class="flex items-center space-x-3 mb-2">
-                        <div class="w-10 h-10 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center">
-                            <svg width="20" height="20" stroke-width="2" viewBox="0 0 24 24" fill="none" stroke="white">
-                                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" />
-                            </svg>
-                        </div>
-                        <p class="text-purple-200 text-sm font-medium">Mainnet</p>
-                    </div>
-                    <p id="mainnet-balance" class="text-white text-2xl font-bold">N/A</p>
-                </div>
-
-                <div class="glass-effect rounded-2xl p-6 border border-blue-400/30">
-                    <div class="flex items-center space-x-3 mb-2">
-                        <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-lg flex items-center justify-center">
-                            <svg width="20" height="20" stroke-width="2" viewBox="0 0 24 24" fill="none" stroke="white">
-                                <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" />
-                            </svg>
-                        </div>
-                        <p class="text-purple-200 text-sm font-medium">Sepolia</p>
-                    </div>
-                    <p id="sepolia-balance" class="text-white text-2xl font-bold">N/A</p>
-                </div>
-
-                <div class="glass-effect rounded-2xl p-6 border border-orange-400/30 md:col-span-1 col-span-1">
-                    <div class="flex items-center space-x-3 mb-2">
-                        <div class="w-10 h-10 bg-gradient-to-br from-orange-500 to-red-500 rounded-lg flex items-center justify-center">
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
-                                <path d="M10 2h4" />
-                                <path d="M12 14v-4" />
-                                <path d="M4 13a8 8 0 0 1 8-8 8 8 0 0 1 8 8 8 8 0 0 1-8 8 8 8 0 0 1-8-8z" />
-                            </svg>
-                        </div>
-                        <p class="text-purple-200 text-sm font-medium">Cooldown</p>
-                    </div>
-                    <p id="cooldown-remaining" class="text-white text-lg font-bold">N/A</p>
-                </div>
-            </div>
-
-            <!-- Action Buttons -->
-            <div class="space-y-4 pt-2">
-                <button id="connect-wallet-btn" class="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-2xl shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-2xl text-lg">
-                    <span class="flex items-center justify-center">
-                        <svg class="mr-2" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h12a2 2 0 0 1 0 4H5a2 2 0 0 1 0 4h12a2 2 0 0 0 2-2v-4a1 1 0 0 0-1-1H9a1 1 0 0 0 0 2h7" />
-                        </svg>
-                        Connect Wallet
-                    </span>
-                </button>
-                
-                <button id="request-eth-btn" class="hidden w-full font-bold py-4 px-6 rounded-2xl shadow-lg transition-all duration-300 text-lg bg-gray-600/50 text-gray-400 cursor-not-allowed" disabled>
-                    <span class="flex items-center justify-center">
-                        <svg class="mr-2" width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                            <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" />
-                        </svg>
-                        Request 0.1 Sepolia ETH
-                    </span>
-                </button>
-            </div>
-
-            <!-- Status Message -->
-            <div id="message-box" class="hidden rounded-2xl p-4 text-center font-semibold border-l-4">
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <div class="text-center mt-6 text-purple-200 text-sm">
-            <p>Donate At 0xFC82219FD2D9DF30Cf8C5C57FFfe59f41143D9F9</p>
-        </div>
-    </div>
-
-    <script type="text/javascript">
-        const FAUCET_CONTRACT_ADDRESS = '0xFC82219FD2D9DF30Cf8C5C57FFfe59f41143D9F9';
-        const FAUCET_ABI = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"FaucetRequest","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"by","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Recharged","type":"event"},{"inputs":[],"name":"COOLDOWN_PERIOD","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"FAUCET_AMOUNT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_address","type":"address"}],"name":"getLastRequest","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"requestSepoliaEth","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdrawAll","outputs":[],"stateMutability":"nonpayable","type":"function"},{"stateMutability":"payable","type":"receive"}];
-
-        const REQUIRED_MAINNET_BALANCE = ethers.utils.parseEther("0.01");
-        const COOLDOWN_PERIOD_SECONDS = 24 * 60 * 60;
-        const SEPOLIA_CHAIN_ID = '0xaa36a7';
-
-        const userAddressEl = document.getElementById('user-address');
-        const mainnetBalanceEl = document.getElementById('mainnet-balance');
-        const sepoliaBalanceEl = document.getElementById('sepolia-balance');
-        const cooldownRemainingEl = document.getElementById('cooldown-remaining');
-        const connectBtn = document.getElementById('connect-wallet-btn');
-        const requestBtn = document.getElementById('request-eth-btn');
-        const infoSection = document.getElementById('info-section');
-        const messageBox = document.getElementById('message-box');
-
-        let provider;
-        let sepoliaSigner;
-        let mainnetProvider;
-        let userAddress;
-        let faucetContract;
-        let mainnetBalance;
-        let lastRequestTime;
-
-        function updateMessage(msg, type = 'info') {
-            messageBox.textContent = msg;
-            messageBox.classList.remove('hidden', 'border-emerald-400', 'border-red-400', 'border-blue-400', 'bg-emerald-500/20', 'bg-red-500/20', 'bg-blue-500/20');
-            if (type === 'success') {
-                messageBox.classList.add('border-emerald-400', 'bg-emerald-500/20');
-            } else if (type === 'error') {
-                messageBox.classList.add('border-red-400', 'bg-red-500/20');
-            } else {
-                messageBox.classList.add('border-blue-400', 'bg-blue-500/20');
-            }
+            summaryEth.textContent = amount.toFixed(2);
+            summaryTotal.textContent = `$${totalUSD} (${totalSats.toLocaleString()} sats)`;
         }
 
-        function formatTimeRemaining(seconds) {
-            if (seconds <= 0) return "Ready to claim! 🎉";
-            const hours = Math.floor(seconds / 3600);
-            const minutes = Math.floor((seconds % 3600) / 60);
-            const secs = seconds % 60;
-            return `${hours}h ${minutes}m ${secs}s`;
-        }
-
-        async function fetchData() {
-            if (!userAddress || !provider) return;
-
-            try {
-                requestBtn.textContent = 'Loading...';
-                requestBtn.classList.add('animate-pulse');
-
-                mainnetBalance = await mainnetProvider.getBalance(userAddress);
-                mainnetBalanceEl.textContent = `${ethers.utils.formatEther(mainnetBalance).substring(0, 6)} ETH`;
-
-                const sepoliaBal = await sepoliaSigner.getBalance();
-                sepoliaBalanceEl.textContent = `${ethers.utils.formatEther(sepoliaBal).substring(0, 6)} ETH`;
-
-                const lastTime = await faucetContract.getLastRequest(userAddress);
-                lastRequestTime = lastTime.toNumber();
-
-                const currentTime = Math.floor(Date.now() / 1000);
-                const timeRemaining = (lastRequestTime + COOLDOWN_PERIOD_SECONDS) - currentTime;
-                cooldownRemainingEl.textContent = formatTimeRemaining(timeRemaining);
-
-                const canRequest = mainnetBalance.gte(REQUIRED_MAINNET_BALANCE) && timeRemaining <= 0;
-                requestBtn.disabled = !canRequest;
-                requestBtn.classList.toggle('bg-gradient-to-r', canRequest);
-                requestBtn.classList.toggle('from-emerald-500', canRequest);
-                requestBtn.classList.toggle('to-green-600', canRequest);
-                requestBtn.classList.toggle('hover:from-emerald-600', canRequest);
-                requestBtn.classList.toggle('hover:to-green-700', canRequest);
-                requestBtn.classList.toggle('hover:scale-105', canRequest);
-                requestBtn.classList.toggle('bg-gray-600/50', !canRequest);
-                requestBtn.classList.toggle('text-gray-400', !canRequest);
-                requestBtn.classList.toggle('cursor-not-allowed', !canRequest);
-                
-                requestBtn.innerHTML = `<span class="flex items-center justify-center">
-                    <svg class="mr-2" width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" />
-                    </svg>
-                    Request 0.1 Sepolia ETH
-                </span>`;
-                requestBtn.classList.remove('animate-pulse');
-
-                infoSection.classList.remove('hidden');
-
-            } catch (error) {
-                console.error("Error fetching data:", error);
-                updateMessage("Error fetching wallet data. See console for details.", 'error');
-            }
-        }
-
-        async function connectWallet() {
-            try {
-                if (typeof window.ethereum === 'undefined') {
-                    updateMessage("Please install MetaMask to use this dApp.", 'error');
-                    return;
-                }
-                
-                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                userAddress = accounts[0];
-
-                const chainId = await window.ethereum.request({ method: 'eth_chainId' });
-                if (chainId !== SEPOLIA_CHAIN_ID) {
-                    updateMessage("Please switch to the Sepolia network in MetaMask.", 'error');
-                    window.ethereum.on('chainChanged', connectWallet);
-                    return;
-                }
-
-                provider = new ethers.providers.Web3Provider(window.ethereum);
-                sepoliaSigner = provider.getSigner();
-                mainnetProvider = new ethers.providers.JsonRpcProvider("https://eth-mainnet.public.blastapi.io");
-                faucetContract = new ethers.Contract(FAUCET_CONTRACT_ADDRESS, FAUCET_ABI, sepoliaSigner);
-
-                userAddressEl.textContent = userAddress;
-                connectBtn.classList.add('hidden');
-                requestBtn.classList.remove('hidden');
-
-                updateMessage('Wallet connected successfully! 🎉', 'success');
-                
-                fetchData();
-                
-                window.ethereum.on('accountsChanged', (newAccounts) => {
-                    if (newAccounts.length === 0) {
-                        location.reload();
-                    } else {
-                        userAddress = newAccounts[0];
-                        userAddressEl.textContent = userAddress;
-                        fetchData();
-                    }
-                });
-
-                window.ethereum.on('chainChanged', () => {
-                    location.reload();
-                });
-
-            } catch (error) {
-                console.error("Connection error:", error);
-                updateMessage("Failed to connect wallet. Please check MetaMask and your browser console.", 'error');
-            }
-        }
-
-        async function requestEth() {
-            if (mainnetBalance && mainnetBalance.lt(REQUIRED_MAINNET_BALANCE)) {
-                updateMessage(`Your mainnet balance must be at least ${ethers.utils.formatEther(REQUIRED_MAINNET_BALANCE)} ETH.`, 'error');
-                return;
-            }
-
-            const currentTime = Math.floor(Date.now() / 1000);
-            if (currentTime < lastRequestTime + COOLDOWN_PERIOD_SECONDS) {
-                const timeRemaining = (lastRequestTime + COOLDOWN_PERIOD_SECONDS) - currentTime;
-                updateMessage(`Please wait. Your cooldown period will end in ${formatTimeRemaining(timeRemaining)}.`, 'error');
-                return;
-            }
-
-            requestBtn.textContent = 'Requesting...';
-            requestBtn.disabled = true;
-            try {
-                const tx = await faucetContract.requestSepoliaEth();
-                updateMessage("Transaction sent. Waiting for confirmation... ⏳", 'info');
-                await tx.wait();
-
-                updateMessage("Successfully received 0.1 Sepolia ETH! 🎉", 'success');
-                fetchData();
-
-            } catch (error) {
-                console.error("Transaction error:", error);
-                const errorMessage = error.reason || error.message || "Unknown error";
-                updateMessage(`Failed to request Sepolia ETH: ${errorMessage}`, 'error');
-            } finally {
-                requestBtn.disabled = false;
-                requestBtn.innerHTML = `<span class="flex items-center justify-center">
-                    <svg class="mr-2" width="24" height="24" stroke-width="2" viewBox="0 0 24 24" fill="none" stroke="currentColor">
-                        <path d="M13 2L3 14H12L11 22L21 10H12L13 2Z" />
-                    </svg>
-                    Request 0.1 Sepolia ETH
-                </span>`;
-            }
-        }
-        
-        document.addEventListener('DOMContentLoaded', () => {
-            connectBtn.addEventListener('click', connectWallet);
-            requestBtn.addEventListener('click', requestEth);
+        // Handle payment method selection (only BTC Lightning available)
+        paymentOptions.forEach(option => {
+            option.addEventListener('click', function() {
+                paymentOptions.forEach(opt => opt.classList.remove('active'));
+                this.classList.add('active');
+                selectedPayment = this.dataset.payment;
+                summaryMethod.textContent = 'BTC Lightning';
+            });
         });
+
+        // Handle buy button click
+        buyButton.addEventListener('click', function() {
+            const amount = parseFloat(ethInput.value);
+            
+            if (!amount || amount <= 0) {
+                alert('Please enter a valid amount');
+                return;
+            }
+
+            const totalUSD = (amount * PRICE_PER_ETH).toFixed(2);
+            const totalSats = calculateSats(totalUSD);
+            
+            modalAmount.innerHTML = `
+                <strong style="font-size: 24px; color: #f5576c;">${totalSats.toLocaleString()} sats</strong>
+                <br><span style="font-size: 14px; color: #666;">($${totalUSD} USD)</span>
+                <br><span style="font-size: 12px; color: #999;">BTC Price: $${btcPrice.toLocaleString()}</span>
+            `;
+            
+            modalAddress.innerHTML = `
+                <div style="font-weight: bold; margin-bottom: 10px; color: #333;">Lightning Address:</div>
+                <div style="background: #f0f0f0; padding: 15px; border-radius: 8px; word-break: break-all; font-family: monospace; color: #333; font-size: 16px; font-weight: bold;">
+                    ${LIGHTNING_ADDRESS}
+                </div>
+                <div style="margin-top: 15px; font-size: 13px; color: #666; line-height: 1.6;">
+                    Send exactly <strong style="color: #f5576c;">${totalSats.toLocaleString()} sats</strong> to complete your purchase of <strong>${amount} Sepolia ETH</strong>
+                </div>
+            `;
+            
+            modal.classList.add('active');
+        });
+
+        // Close modal
+        closeModal.addEventListener('click', function() {
+            modal.classList.remove('active');
+        });
+
+        // Close modal on background click
+        modal.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.classList.remove('active');
+            }
+        });
+
+        // Initialize - fetch BTC price on load
+        fetchBTCPrice();
+        
+        // Update BTC price every 60 seconds
+        setInterval(fetchBTCPrice, 60000);
     </script>
 </body>
 </html>
-
-
-
-
-
-
