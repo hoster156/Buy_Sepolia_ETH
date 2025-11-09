@@ -17,11 +17,17 @@
             min-height: 100vh;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             padding: 15px;
             position: relative;
             overflow-x: hidden;
             overflow-y: auto;
+        }
+        
+        @media (min-height: 700px) {
+            body {
+                align-items: center;
+            }
         }
 
         body::before {
@@ -51,7 +57,7 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
             position: relative;
             z-index: 1;
-            margin: 10px auto;
+            margin: auto;
         }
 
         .header {
