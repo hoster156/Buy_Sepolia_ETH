@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sepolia ETH Exchange - $0.10 per ETH</title>
+    <title>⚡ Lightning Dice Casino</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
+        
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -18,596 +18,327 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            padding: 15px;
-            position: relative;
-            overflow-x: hidden;
-            overflow-y: auto;
+            padding: 20px;
         }
-
-        body::before {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 90%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
-            background-size: 50px 50px;
-            animation: moveBackground 20s linear infinite;
-            z-index: 0;
-        }
-
-        @keyframes moveBackground {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(50px, 50px); }
-        }
-
+        
         .container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
+            background: white;
             border-radius: 20px;
-            padding: 25px;
+            padding: 40px;
             max-width: 500px;
             width: 100%;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            position: relative;
-            z-index: 1;
-            margin: 10px auto;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-
-        .header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .logo {
-            font-size: 40px;
-            margin-bottom: 8px;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
+        
         h1 {
-            color: white;
-            font-size: 22px;
-            margin-bottom: 8px;
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 2.5em;
         }
-
-        .price-tag {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-            padding: 8px 16px;
-            border-radius: 20px;
-            display: inline-block;
-            font-weight: bold;
-            font-size: 16px;
-            animation: pulse 2s ease-in-out infinite;
+        
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
         }
-
+        
+        .game-area {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .dice {
+            font-size: 120px;
+            margin: 20px 0;
+            animation: pulse 2s infinite;
+        }
+        
         @keyframes pulse {
             0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.05); }
+            50% { transform: scale(1.1); }
         }
-
-        .exchange-section {
-            background: rgba(255, 255, 255, 0.15);
-            border-radius: 15px;
+        
+        .dice.rolling {
+            animation: roll 0.5s ease-in-out;
+        }
+        
+        @keyframes roll {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .bet-section {
+            background: #f8f9fa;
             padding: 20px;
-            margin-bottom: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
         }
-
-        .input-group {
-            margin-bottom: 15px;
-        }
-
+        
         label {
-            color: white;
             display: block;
             margin-bottom: 8px;
+            color: #333;
             font-weight: 600;
-            font-size: 14px;
         }
-
+        
         input[type="number"] {
             width: 100%;
             padding: 12px;
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
+            border: 2px solid #ddd;
+            border-radius: 8px;
             font-size: 16px;
-            transition: all 0.3s;
-        }
-
-        input[type="number"]:focus {
-            outline: none;
-            border-color: #f5576c;
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        input[type="number"]::placeholder {
-            color: rgba(255, 255, 255, 0.5);
-        }
-
-        .payment-methods {
-            margin-bottom: 0;
-        }
-
-        .payment-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            margin-top: 10px;
-        }
-
-        .payment-option {
-            background: rgba(255, 255, 255, 0.1);
-            border: 2px solid rgba(255, 255, 255, 0.3);
-            border-radius: 12px;
-            padding: 15px;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-align: center;
-        }
-
-        .payment-option:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: translateY(-3px);
-        }
-
-        .payment-option.active {
-            border-color: #f5576c;
-            background: rgba(245, 87, 108, 0.2);
-            box-shadow: 0 0 15px rgba(245, 87, 108, 0.4);
-        }
-
-        .payment-icon {
-            font-size: 32px;
-            margin-bottom: 6px;
-        }
-
-        .payment-name {
-            color: white;
-            font-weight: 600;
-            font-size: 14px;
-        }
-
-        .payment-network {
-            color: rgba(255, 255, 255, 0.7);
-            font-size: 11px;
-            margin-top: 3px;
-        }
-
-        .summary {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 12px;
-            padding: 15px;
             margin-bottom: 15px;
-            color: white;
-        }
-
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 8px;
-            font-size: 14px;
-            gap: 10px;
-        }
-
-        .summary-row span:first-child {
-            flex-shrink: 0;
-        }
-
-        .summary-row span:last-child {
-            text-align: right;
-            word-break: break-word;
-        }
-
-        .summary-row.total {
-            font-weight: bold;
-            font-size: 18px;
-            padding-top: 8px;
-            border-top: 1px solid rgba(255, 255, 255, 0.3);
-            margin-top: 8px;
-        }
-
-        .buy-button {
-            width: 100%;
-            padding: 15px;
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            border: none;
-            border-radius: 12px;
-            color: white;
-            font-size: 18px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: all 0.3s;
-            box-shadow: 0 4px 12px rgba(245, 87, 108, 0.4);
-            margin-bottom: 10px;
-        }
-
-        .buy-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 16px rgba(245, 87, 108, 0.6);
-        }
-
-        .buy-button:active {
-            transform: translateY(0);
-        }
-
-        .buy-button:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            transform: none;
-        }
-
-        .sender-address {
-            text-align: center;
-            color: white;
-            font-size: 12px;
-            margin-top: 10px;
-            padding: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 8px;
-            word-break: break-all;
-        }
-
-        .sender-address span {
-            font-family: monospace;
-            font-size: 11px;
-            display: block;
-            margin-top: 5px;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            z-index: 1000;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .modal.active {
-            display: flex;
-        }
-
-        .modal-content {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 30px 20px;
-            border-radius: 15px;
-            max-width: 400px;
-            width: 100%;
-            text-align: center;
-            animation: modalSlideIn 0.3s ease-out;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        @keyframes modalSlideIn {
-            from {
-                transform: translateY(-50px);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .modal-icon {
-            font-size: 50px;
-            margin-bottom: 15px;
-        }
-
-        .modal-content h2 {
-            color: #333;
-            margin-bottom: 12px;
-            font-size: 20px;
-        }
-
-        .modal-content p {
-            color: #666;
-            margin-bottom: 15px;
-            font-size: 14px;
-        }
-
-        .close-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 15px;
-            font-weight: 600;
-        }
-
-        .wallet-address {
-            background: #f0f0f0;
-            padding: 10px;
-            border-radius: 8px;
-            word-break: break-all;
-            margin: 12px 0;
-            font-family: monospace;
-            color: #333;
-            font-size: 14px;
-        }
-
-        .btc-price-indicator {
-            color: rgba(255, 255, 255, 0.8);
-            font-size: 11px;
-            text-align: center;
-            margin-top: 8px;
-        }
-
-        @media (max-width: 480px) {
-            body {
-                padding: 10px;
-            }
-
-            .container {
-                padding: 20px;
-                border-radius: 15px;
-            }
-
-            h1 {
-                font-size: 20px;
-            }
-
-            .logo {
-                font-size: 36px;
-            }
-
-            .price-tag {
-                font-size: 14px;
-                padding: 6px 14px;
-            }
-
-            .exchange-section {
-                padding: 15px;
-            }
-
-            input[type="number"] {
-                font-size: 15px;
-                padding: 10px;
-            }
-
-            .summary-row {
-                font-size: 13px;
-            }
-
-            .summary-row.total {
-                font-size: 16px;
-            }
-
-            .buy-button {
-                font-size: 16px;
-                padding: 12px;
-            }
-
-            .sender-address {
-                font-size: 11px;
-                padding: 8px;
-            }
-
-            .sender-address span {
-                font-size: 10px;
-            }
-
-            .modal-content {
-                padding: 25px 15px;
-            }
-
-            .modal-icon {
-                font-size: 40px;
-            }
-
-            .modal-content h2 {
-                font-size: 18px;
-            }
-
-            .wallet-address {
-                font-size: 12px;
-                padding: 8px;
-            }
         }
         
-        @media (max-width: 360px) {
-            .container {
-                padding: 15px;
-            }
-
-            h1 {
-                font-size: 18px;
-            }
-
-            .summary-row {
-                font-size: 12px;
-            }
-
-            .summary-row.total {
-                font-size: 15px;
-            }
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            background: white;
+        }
+        
+        .payment-address {
+            background: #fff3cd;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            border: 2px solid #ffc107;
+        }
+        
+        .payment-address strong {
+            color: #856404;
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .address {
+            font-family: monospace;
+            font-size: 18px;
+            color: #d63384;
+            font-weight: bold;
+        }
+        
+        button {
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+        }
+        
+        .result.win {
+            background: #d4edda;
+            color: #155724;
+            border: 2px solid #28a745;
+            display: block;
+        }
+        
+        .result.lose {
+            background: #f8d7da;
+            color: #721c24;
+            border: 2px solid #dc3545;
+            display: block;
+        }
+        
+        .info {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #004085;
+        }
+        
+        .rules {
+            margin-top: 20px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .rules h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .rules ul {
+            margin-left: 20px;
+        }
+        
+        .rules li {
+            margin: 5px 0;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <div class="logo">⚡</div>
-            <h1>Sepolia ETH Exchange</h1>
-            <div class="price-tag">$0.10 per ETH</div>
+        <h1>🎲⚡ Lightning Dice</h1>
+        <p class="subtitle">Pay with Lightning, Win Instantly!</p>
+        
+        <div class="game-area">
+            <div class="dice" id="dice">🎲</div>
+            <div id="diceNumber" style="font-size: 24px; color: #667eea; font-weight: bold;">?</div>
         </div>
-
-        <div class="exchange-section">
-            <div class="input-group">
-                <label>Amount of Sepolia ETH</label>
-                <input type="number" id="ethAmount" placeholder="Enter amount" min="0" step="0.01" value="1">
+        
+        <div class="bet-section">
+            <label for="betAmount">Bet Amount (sats):</label>
+            <input type="number" id="betAmount" min="100" value="100" placeholder="Enter amount in sats">
+            
+            <label for="prediction">Your Prediction:</label>
+            <select id="prediction">
+                <option value="over">Over 3.5 (Roll 4, 5, or 6 to win)</option>
+                <option value="under">Under 3.5 (Roll 1, 2, or 3 to win)</option>
+            </select>
+            
+            <div class="payment-address">
+                <strong>⚡ Send payment to:</strong>
+                <div class="address">payment1@speed.app</div>
             </div>
-
-            <div class="payment-methods">
-                <label>Payment Method</label>
-                <div class="payment-grid">
-                    <div class="payment-option active" data-payment="btc">
-                        <div class="payment-icon">
-                            <svg width="32" height="32" viewBox="0 0 32 32" fill="white">
-                                <path d="M16 32C7.163 32 0 24.837 0 16S7.163 0 16 0s16 7.163 16 16-7.163 16-16 16zm7.189-17.98c.314-2.096-1.283-3.223-3.465-3.975l.708-2.84-1.728-.43-.69 2.765c-.454-.114-.92-.22-1.385-.326l.695-2.783L15.596 6l-.708 2.839c-.376-.086-.746-.17-1.104-.26l.002-.009-2.384-.595-.46 1.846s1.283.294 1.256.312c.7.175.826.638.805 1.006l-.806 3.235c.048.012.11.03.18.057l-.183-.045-1.13 4.532c-.086.212-.303.531-.793.41.018.025-1.256-.313-1.256-.313l-.858 1.978 2.25.561c.418.105.828.215 1.231.318l-.715 2.872 1.727.43.708-2.84c.472.127.93.245 1.378.357l-.706 2.828 1.728.43.715-2.866c2.948.558 5.164.333 6.097-2.333.752-2.146-.037-3.385-1.588-4.192 1.13-.26 1.98-1.003 2.207-2.538zm-3.95 5.538c-.533 2.147-4.148.986-5.32.695l.95-3.805c1.172.293 4.929.872 4.37 3.11zm.535-5.569c-.487 1.953-3.495.96-4.47.717l.86-3.45c.975.243 4.118.696 3.61 2.733z"/>
-                            </svg>
-                        </div>
-                        <div class="payment-name">Bitcoin</div>
-                        <div class="payment-network">Lightning Network</div>
-                    </div>
-                </div>
+            
+            <div class="info">
+                <strong>ℹ️ How to Play:</strong><br>
+                1. Choose your bet amount and prediction<br>
+                2. Send exactly that amount to the Lightning address above<br>
+                3. Click "I've Sent Payment - Roll Dice!"<br>
+                4. Win 2x your bet if you guess correctly!
             </div>
         </div>
-
-        <div class="summary">
-            <div class="summary-row">
-                <span>Sepolia ETH:</span>
-                <span id="summaryEth">1.00</span>
-            </div>
-            <div class="summary-row">
-                <span>Price per ETH:</span>
-                <span>$0.10</span>
-            </div>
-            <div class="summary-row">
-                <span>Payment Method:</span>
-                <span id="summaryMethod">BTC Lightning</span>
-            </div>
-            <div class="summary-row total">
-                <span>Total:</span>
-                <span id="summaryTotal">$0.10 (500 sats)</span>
-            </div>
-            <div class="btc-price-indicator" id="btcPriceIndicator">Loading BTC price...</div>
-        </div>
-
-        <button class="buy-button" id="buyButton">Buy Sepolia ETH</button>
-
-        <div class="sender-address">
-            <span>Check Balance: 0x85090A672afe0d4197631Ab1ad8622b6Ce5F6dc3</span>
+        
+        <button onclick="rollDice()" id="rollBtn">I've Sent Payment - Roll Dice! 🎲</button>
+        
+        <div class="result" id="result"></div>
+        
+        <div class="rules">
+            <h3>📜 Game Rules</h3>
+            <ul>
+                <li><strong>Over 3.5:</strong> Win if dice shows 4, 5, or 6</li>
+                <li><strong>Under 3.5:</strong> Win if dice shows 1, 2, or 3</li>
+                <li><strong>Payout:</strong> 2x your bet on win</li>
+                <li><strong>Min Bet:</strong> 100 sats</li>
+            </ul>
         </div>
     </div>
-
-    <div class="modal" id="paymentModal">
-        <div class="modal-content">
-            <div class="modal-icon">⚡</div>
-            <h2>Payment Instructions</h2>
-            <p>Send <strong id="modalAmount"></strong> to:</p>
-            <div class="wallet-address" id="modalAddress"></div>
-            <p style="font-size: 12px; color: #999;">After payment, your Sepolia ETH will be sent to your wallet within 1 minute.</p>
-            <button class="close-button" id="closeModal">Got it!</button>
-        </div>
-    </div>
+    
     <script>
-        const ethInput = document.getElementById('ethAmount');
-        const summaryEth = document.getElementById('summaryEth');
-        const summaryMethod = document.getElementById('summaryMethod');
-        const summaryTotal = document.getElementById('summaryTotal');
-        const btcPriceIndicator = document.getElementById('btcPriceIndicator');
-        const buyButton = document.getElementById('buyButton');
-        const paymentOptions = document.querySelectorAll('.payment-option');
-        const modal = document.getElementById('paymentModal');
-        const closeModal = document.getElementById('closeModal');
-        const modalAmount = document.getElementById('modalAmount');
-        const modalAddress = document.getElementById('modalAddress');
-
-        const PRICE_PER_ETH = 0.10;
-        const LIGHTNING_ADDRESS = 'payment1@speed.app';
-        let selectedPayment = 'btc';
-        let btcPrice = 0;
-
-        async function fetchBTCPrice() {
-            try {
-                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd');
-                const data = await response.json();
-                btcPrice = data.bitcoin.usd;
-                btcPriceIndicator.textContent = `BTC Price: $${btcPrice.toLocaleString()}`;
-                updateSummary();
-            } catch (error) {
-                console.error('Error fetching BTC price:', error);
-                btcPrice = 100000;
-                btcPriceIndicator.textContent = `BTC Price: $${btcPrice.toLocaleString()} (estimated)`;
-                updateSummary();
-            }
-        }
-
-        function calculateSats(usdAmount) {
-            if (btcPrice === 0) return 0;
-            const btcAmount = usdAmount / btcPrice;
-            const sats = Math.round(btcAmount * 100000000);
-            return sats;
-        }
-
-        ethInput.addEventListener('input', updateSummary);
-
-        function updateSummary() {
-            const amount = parseFloat(ethInput.value) || 0;
-            const totalUSD = (amount * PRICE_PER_ETH).toFixed(2);
-            const totalSats = calculateSats(totalUSD);
-            summaryEth.textContent = amount.toFixed(2);
-            summaryTotal.textContent = `$${totalUSD} (${totalSats.toLocaleString()} sats)`;
-        }
-
-        paymentOptions.forEach(option => {
-            option.addEventListener('click', function() {
-                paymentOptions.forEach(opt => opt.classList.remove('active'));
-                this.classList.add('active');
-                selectedPayment = this.dataset.payment;
-                summaryMethod.textContent = 'BTC Lightning';
-            });
-        });
-
-        buyButton.addEventListener('click', function() {
-            const amount = parseFloat(ethInput.value);
-            if (!amount || amount <= 0) {
-                alert('Please enter a valid amount');
+        function rollDice() {
+            const betAmount = parseInt(document.getElementById('betAmount').value);
+            const prediction = document.getElementById('prediction').value;
+            const diceElement = document.getElementById('dice');
+            const diceNumber = document.getElementById('diceNumber');
+            const resultElement = document.getElementById('result');
+            const rollBtn = document.getElementById('rollBtn');
+            
+            // Validation
+            if (!betAmount || betAmount < 100) {
+                alert('Please enter a valid bet amount (minimum 100 sats)');
                 return;
             }
-
-            const totalUSD = (amount * PRICE_PER_ETH).toFixed(2);
-            const totalSats = calculateSats(totalUSD);
             
-            modalAmount.innerHTML = `
-                <strong style="font-size: 20px; color: #f5576c;">${totalSats.toLocaleString()} sats</strong>
-                <br><span style="font-size: 13px; color: #666;">($${totalUSD} USD)</span>
-                <br><span style="font-size: 11px; color: #999;">BTC Price: $${btcPrice.toLocaleString()}</span>
-            `;
+            // Disable button during roll
+            rollBtn.disabled = true;
+            resultElement.style.display = 'none';
             
-            modalAddress.innerHTML = `
-                <div style="font-weight: bold; margin-bottom: 8px; color: #333; font-size: 13px;">Lightning Address:</div>
-                <div style="background: #f0f0f0; padding: 12px; border-radius: 8px; word-break: break-all; font-family: monospace; color: #333; font-size: 13px; font-weight: bold;">
-                    ${LIGHTNING_ADDRESS}
-                </div>
-                <div style="margin-top: 12px; font-size: 12px; color: #666; line-height: 1.5;">
-                    Send exactly <strong style="color: #f5576c;">${totalSats.toLocaleString()} sats</strong> to complete your purchase of <strong>${amount} Sepolia ETH</strong>
-                </div>
-            `;
+            // Animate dice
+            diceElement.classList.add('rolling');
+            diceNumber.textContent = '?';
             
-            modal.classList.add('active');
-        });
-
-        closeModal.addEventListener('click', function() {
-            modal.classList.remove('active');
-        });
-
-        modal.addEventListener('click', function(e) {
-            if (e.target === modal) {
-                modal.classList.remove('active');
+            // Simulate rolling
+            let counter = 0;
+            const rollingInterval = setInterval(() => {
+                diceNumber.textContent = Math.floor(Math.random() * 6) + 1;
+                counter++;
+                
+                if (counter > 10) {
+                    clearInterval(rollingInterval);
+                    
+                    // Final roll
+                    const finalRoll = Math.floor(Math.random() * 6) + 1;
+                    diceNumber.textContent = finalRoll;
+                    diceElement.classList.remove('rolling');
+                    
+                    // Determine win/lose
+                    let isWin = false;
+                    if (prediction === 'over' && finalRoll >= 4) {
+                        isWin = true;
+                    } else if (prediction === 'under' && finalRoll <= 3) {
+                        isWin = true;
+                    }
+                    
+                    // Show result
+                    if (isWin) {
+                        const winAmount = betAmount * 2;
+                        resultElement.className = 'result win';
+                        resultElement.innerHTML = `
+                            🎉 YOU WIN! 🎉<br>
+                            You rolled: ${finalRoll}<br>
+                            Winnings: ${winAmount} sats<br>
+                            (Payment will be sent to your Lightning wallet)
+                        `;
+                    } else {
+                        resultElement.className = 'result lose';
+                        resultElement.innerHTML = `
+                            😔 You Lost<br>
+                            You rolled: ${finalRoll}<br>
+                            Better luck next time!
+                        `;
+                    }
+                    
+                    // Re-enable button
+                    rollBtn.disabled = false;
+                }
+            }, 100);
+        }
+        
+        // Update dice emoji based on number
+        document.getElementById('diceNumber').addEventListener('DOMSubtreeModified', function() {
+            const num = this.textContent;
+            const diceEmojis = {
+                '1': '⚀',
+                '2': '⚁',
+                '3': '⚂',
+                '4': '⚃',
+                '5': '⚄',
+                '6': '⚅'
+            };
+            
+            if (diceEmojis[num]) {
+                document.getElementById('dice').textContent = diceEmojis[num];
             }
         });
-
-        fetchBTCPrice();
-        setInterval(fetchBTCPrice, 60000);
     </script>
 </body>
 </html>
